@@ -1,0 +1,10 @@
+name: valkey
+
+services:
+  valkey:
+    image: docker.io/valkey/valkey:8-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/data:/data

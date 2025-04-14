@@ -1,0 +1,13 @@
+name: postgresql
+
+services:
+  postgresql:
+    image: docker.io/postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/data:/var/lib/postgresql/data
