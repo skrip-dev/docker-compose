@@ -1,18 +1,21 @@
-name: valkey
+name: postgresql
 
 networks:
   traefik_net:
     external: true
 
 services:
-  valkey:
-    image: docker.io/valkey/valkey:8-alpine
+  postgresql:
+    image: docker.io/postgres:16-alpine
     restart: always
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
     ports:
-      - 6379:6379
+      - 5432:5432
     networks:
       - traefik_net
     volumes:
-      - ./data/data:/data
+      - ./data/data:/var/lib/postgresql/data
     labels:
       - "traefik.enable=false"
