@@ -1,5 +1,9 @@
 name: valkey
 
+networks:
+  traefik_net:
+    external: true
+
 services:
   valkey:
     image: docker.io/valkey/valkey:8-alpine

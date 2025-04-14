@@ -1,5 +1,9 @@
 name: postgresql
 
+networks:
+  traefik_net:
+    external: true
+
 services:
   postgresql:
     image: docker.io/postgres:16-alpine
