@@ -1,0 +1,28 @@
+name: docker-registry
+
+networks:
+  traefik_net:
+    external: true
+
+services:
+  registry:
+    image: registry:2
+    restart: always
+    env_file:
+      - .env
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/registry.password
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+    networks:
+      - traefik_net
+    volumes:
+      - ./data/auth:/auth
+      - ./data/data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.registry.rule=Host(`${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.registry.entrypoints=websecure"
+      - "traefik.http.routers.registry.tls=true"
+      - "traefik.http.routers.registry.tls.certresolver=letsencrypt"

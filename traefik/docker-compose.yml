@@ -1,0 +1,44 @@
+name: traefik
+
+networks:
+  traefik_net:
+    name: traefik_net
+    driver: bridge
+
+services:
+  traefik:
+    image: traefik:v3.2
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker"
+      - "--providers.docker.network=traefik_net"
+      - "--providers.docker.watch"
+      - "--providers.file.directory=/file_provider"
+      - "--providers.file.watch=true"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--entryPoints.websecure.transport.respondingTimeouts.readTimeout=900s"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.resolvers=${LETS_DNS_RESOLVER}"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=60s"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.disablePropagationCheck=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=${LETS_ENCRYPT_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    env_file:
+      - .env
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    networks:
+      - traefik_net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/letsencrypt:/letsencrypt
+      - ./file_provider:/file_provider
+    labels:
+      - "traefik.enable=false"
