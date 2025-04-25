@@ -9,3 +9,5 @@ services:
       UPLOAD_LIMIT: 64M
     ports:
       - 80
+    volumes:
+      - phpmyadmin:/var/www/html
