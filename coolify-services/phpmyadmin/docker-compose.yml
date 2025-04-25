@@ -7,3 +7,5 @@ services:
     environment:
       PMA_ARBITRARY: 1
       UPLOAD_LIMIT: 64M
+    ports:
+      - 80
