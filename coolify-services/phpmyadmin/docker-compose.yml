@@ -1,0 +1,9 @@
+name: phpmyadmin
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 64M
