@@ -3,9 +3,6 @@ name: phpmyadmin
 services:
   phpmyadmin:
     image: docker.io/phpmyadmin/phpmyadmin:latest
-    restart: always
     environment:
-      PMA_ARBITRARY: 1
-      UPLOAD_LIMIT: 64M
-    ports:
-      - 80
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=${UPLOAD_LIMIT}
