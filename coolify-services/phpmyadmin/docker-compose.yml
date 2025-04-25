@@ -2,7 +2,7 @@ name: phpmyadmin
 
 services:
   phpmyadmin:
-    image: docker.io/phpmyadmin/phpmyadmin:latest
+    image: docker.io/phpmyadmin:latest
     environment:
       - PMA_ARBITRARY=1
       - UPLOAD_LIMIT=${UPLOAD_LIMIT}
