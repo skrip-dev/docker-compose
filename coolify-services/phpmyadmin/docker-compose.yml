@@ -6,3 +6,9 @@ services:
     environment:
       - PMA_ARBITRARY=1
       - UPLOAD_LIMIT=${UPLOAD_LIMIT}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
