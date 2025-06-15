@@ -9,9 +9,3 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${SERVICE_PASSWORD_PGADMIN}
     volumes:
       - pgadmin_data:/var/lib/pgadmin
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
