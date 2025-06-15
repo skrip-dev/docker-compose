@@ -4,8 +4,11 @@ services:
   pgadmin:
     image: docker.io/dpage/pgadmin4:latest
     environment:
+      - SERVICE_FQDN_PGADMIN=/
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_DEFAULT_PASSWORD=${SERVICE_PASSWORD_PGADMIN}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80/"]
       interval: 10s
