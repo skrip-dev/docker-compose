@@ -1,0 +1,18 @@
+services:
+  metabase:
+    image: metabase/metabase:latest
+    volumes:
+      - "/dev/urandom:/dev/random:ro"
+    environment:
+      - SERVICE_FQDN_METABASE_3000
+      - MB_DB_TYPE=postgres
+      - MB_DB_HOST=${MB_DB_HOST}
+      - MB_DB_PORT=${MB_DB_PORT:-5432}
+      - MB_DB_DBNAME=${MB_DB_DBNAME:-metabase}
+      - MB_DB_USER=${MB_DB_USER:-postgres}
+      - MB_DB_PASS=${MB_DB_PASS}
+    healthcheck:
+      test: "curl --fail -I http://127.0.0.1:3000/api/health || exit 1"
+      interval: 5s
+      timeout: 20s
+      retries: 10
